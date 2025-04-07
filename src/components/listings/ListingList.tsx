@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Package } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ListingCard, { ListingType } from './ListingCard';
 
 interface Listing {
@@ -20,6 +21,17 @@ interface ListingListProps {
 }
 
 const ListingList = ({ listings, onListingClick }: ListingListProps) => {
+  const navigate = useNavigate();
+
+  const handleListingClick = (id: string) => {
+    if (onListingClick) {
+      onListingClick(id);
+    } else {
+      // If no click handler is provided, navigate to the listing detail page
+      navigate(`/listing/${id}`);
+    }
+  };
+
   if (listings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center p-8 text-gray-500">
@@ -35,7 +47,7 @@ const ListingList = ({ listings, onListingClick }: ListingListProps) => {
         <ListingCard
           key={listing.id}
           {...listing}
-          onClick={() => onListingClick && onListingClick(listing.id)}
+          onClick={() => handleListingClick(listing.id)}
         />
       ))}
     </div>

@@ -15,6 +15,7 @@ import ChatPage from "./pages/ChatPage";
 import ListingHistory from "./pages/ListingHistory";
 import Settings from "./pages/Settings";
 import NotificationsPage from "./pages/NotificationsPage";
+import ListingDetail from "./pages/ListingDetail";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/listing-history" element={<ListingHistory />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/listing/:id" element={<ListingDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

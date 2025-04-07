@@ -68,6 +68,10 @@ const ListingHistory = () => {
     }
   ];
 
+  const handleListingClick = (id: string) => {
+    navigate(`/listing/${id}`);
+  };
+
   return (
     <MainLayout>
       {/* Header */}
@@ -102,7 +106,7 @@ const ListingHistory = () => {
                   <ListingCard
                     key={listing.id}
                     {...listing}
-                    onClick={() => console.log(`Active listing clicked: ${listing.id}`)}
+                    onClick={() => handleListingClick(listing.id)}
                   />
                 ))}
               </div>
@@ -121,7 +125,7 @@ const ListingHistory = () => {
                   <ListingCard
                     key={listing.id}
                     {...listing}
-                    onClick={() => console.log(`Past listing clicked: ${listing.id}`)}
+                    onClick={() => handleListingClick(listing.id)}
                   />
                 ))}
               </div>

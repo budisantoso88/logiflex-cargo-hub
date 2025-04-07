@@ -61,7 +61,7 @@ const Index = () => {
     : mockListings.filter(listing => listing.type === activeTab);
   
   const handleListingClick = (id: string) => {
-    console.log(`Listing clicked: ${id}`);
+    navigate(`/listing/${id}`);
   };
   
   const userTokens = 2; // Mock user token count
@@ -74,7 +74,7 @@ const Index = () => {
           <h1 className="text-2xl font-bold">LogiFlex</h1>
           <div className="flex items-center space-x-2">
             <div className="relative">
-              <Bell size={20} className="animate-pulse-slow" />
+              <Bell size={20} className="animate-pulse-slow" onClick={() => navigate('/notifications')} />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 2
               </span>
