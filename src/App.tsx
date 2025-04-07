@@ -11,8 +11,10 @@ import Profile from "./pages/Profile";
 import TokenPurchase from "./pages/TokenPurchase";
 import Search from "./pages/Search";
 import Messages from "./pages/Messages";
+import ChatPage from "./pages/ChatPage";
 import ListingHistory from "./pages/ListingHistory";
 import Settings from "./pages/Settings";
+import NotificationsPage from "./pages/NotificationsPage";
 
 const queryClient = new QueryClient();
 
@@ -29,8 +31,10 @@ const App = () => (
           <Route path="/tokens" element={<TokenPurchase />} />
           <Route path="/search" element={<Search />} />
           <Route path="/messages" element={<Messages />} />
+          <Route path="/chat/:id" element={<ChatPage />} />
           <Route path="/listing-history" element={<ListingHistory />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

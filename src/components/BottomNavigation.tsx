@@ -1,15 +1,30 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Search, Plus, User } from 'lucide-react';
+import { Home, Search, Plus, User, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNavigation = () => {
+  // Mock notification counts
+  const notificationCount = 3;
+  const messageCount = 2;
+
   const navItems = [
     { path: '/', label: 'Beranda', icon: Home },
     { path: '/search', label: 'Pencarian', icon: Search },
     { path: '/create', label: 'Listing', icon: Plus },
-    { path: '/profile', label: 'Profil', icon: User },
+    { 
+      path: '/messages', 
+      label: 'Chat', 
+      icon: MessageCircle,
+      badge: messageCount > 0 ? messageCount : undefined 
+    },
+    { 
+      path: '/profile', 
+      label: 'Profil', 
+      icon: User,
+      badge: notificationCount > 0 ? notificationCount : undefined 
+    },
   ];
 
   return (
@@ -35,7 +50,14 @@ const BottomNavigation = () => {
                     <item.icon size={22} className="text-white" />
                   </div>
                 ) : (
-                  <item.icon size={20} className={isActive ? "mb-1" : "mb-1"} />
+                  <div className="relative">
+                    <item.icon size={20} className={isActive ? "mb-1" : "mb-1"} />
+                    {item.badge && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
                 )}
                 <span className={`text-xs mt-1 ${item.path === '/create' ? "mt-7" : ""}`}>
                   {item.label}

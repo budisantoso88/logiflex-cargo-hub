@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, CreditCard, LogOut, MessageSquare, Settings, User, ChevronRight, Shield, Gift, Star } from 'lucide-react';
+import { Calendar, CreditCard, LogOut, MessageSquare, Settings, User, ChevronRight, Shield, Gift, Star, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/MainLayout';
 import { toast } from "sonner";
@@ -18,13 +18,25 @@ const Profile = () => {
     joinDate: '20 Mar 2025',
   };
   
+  // Mock notification count
+  const notificationCount = 3;
+  
   const menuItems = [
     { 
       icon: MessageSquare, 
       label: 'Pesan', 
       action: () => navigate('/messages'),
       color: 'text-blue-500',
-      bgColor: 'bg-blue-100'
+      bgColor: 'bg-blue-100',
+      badge: 2
+    },
+    { 
+      icon: Bell, 
+      label: 'Notifikasi', 
+      action: () => navigate('/notifications'),
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-100',
+      badge: notificationCount
     },
     { 
       icon: Calendar, 
@@ -44,15 +56,15 @@ const Profile = () => {
       icon: Settings, 
       label: 'Pengaturan', 
       action: () => navigate('/settings'),
-      color: 'text-purple-500',
-      bgColor: 'bg-purple-100'
+      color: 'text-cyan-500',
+      bgColor: 'bg-cyan-100'
     },
     { 
       icon: Shield, 
       label: 'Keamanan', 
       action: () => console.log('Security pressed'),
-      color: 'text-cyan-500',
-      bgColor: 'bg-cyan-100'
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-100'
     },
     { 
       icon: Gift, 
@@ -74,14 +86,29 @@ const Profile = () => {
       <div className="bg-gradient-primary text-white p-6 pt-safe rounded-b-3xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold">Profil</h1>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="text-white hover:bg-white/20 rounded-full"
-            onClick={() => navigate('/settings')}
-          >
-            <Settings size={20} />
-          </Button>
+          <div className="flex">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-white hover:bg-white/20 rounded-full mr-2 relative"
+              onClick={() => navigate('/notifications')}
+            >
+              <Bell size={20} />
+              {notificationCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                  {notificationCount}
+                </span>
+              )}
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-white hover:bg-white/20 rounded-full"
+              onClick={() => navigate('/settings')}
+            >
+              <Settings size={20} />
+            </Button>
+          </div>
         </div>
       </div>
       
@@ -140,8 +167,13 @@ const Profile = () => {
                 onClick={item.action}
               >
                 <div className="flex items-center">
-                  <div className={`${item.bgColor} ${item.color} p-2 rounded-lg mr-3`}>
+                  <div className={`${item.bgColor} ${item.color} p-2 rounded-lg mr-3 relative`}>
                     <item.icon size={18} />
+                    {item.badge && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                        {item.badge}
+                      </span>
+                    )}
                   </div>
                   <span className="font-medium">{item.label}</span>
                 </div>
