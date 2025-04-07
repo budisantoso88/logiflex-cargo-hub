@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Roboto', 'sans-serif'],
+				sans: ['Poppins', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -29,12 +28,12 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				logiflex: {
-					blue: '#1A73E8',
-					green: '#34A853',
-					yellow: '#FBBC05',
-					red: '#EA4335',
-					lightgrey: '#F8F9FA',
-					darkgrey: '#5F6368',
+					blue: '#3B82F6',
+					green: '#10B981',
+					yellow: '#FBBF24',
+					red: '#EF4444',
+					lightgrey: '#F9FAFB',
+					darkgrey: '#4B5563',
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -106,11 +105,20 @@ export default {
 					'100%': { transform: 'translateY(0)', opacity: '1' }
 				}
 			},
+			backgroundImage: {
+				'gradient-primary': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
+				'gradient-secondary': 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
+			},
+			boxShadow: {
+				'card': '0px 10px 25px rgba(0, 0, 0, 0.06)',
+				'button': '0px 8px 15px rgba(59, 130, 246, 0.25)',
+			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
-				'slide-up': 'slide-up 0.3s ease-out'
+				'slide-up': 'slide-up 0.3s ease-out',
+				'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			}
 		}
 	},

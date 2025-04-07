@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,7 +35,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 213.6 93.2% 50.4%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -102,9 +102,27 @@
   }
 }
 
+@layer components {
+  .card-modern {
+    @apply bg-white rounded-xl shadow-card border-0 p-4 transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .btn-gradient {
+    @apply bg-gradient-primary text-white font-medium px-4 py-2 rounded-lg shadow-button transition-all hover:shadow-lg hover:translate-y-[-2px];
+  }
+  
+  .input-modern {
+    @apply border-2 border-gray-200 rounded-lg focus:border-logiflex-blue focus:ring-0 transition-all;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .glass-effect {
+    @apply bg-white/70 backdrop-blur-md;
   }
 }
 

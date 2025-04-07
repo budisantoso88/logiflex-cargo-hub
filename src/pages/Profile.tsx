@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, CreditCard, LogOut, MessageSquare, Settings, User } from 'lucide-react';
+import { Calendar, CreditCard, LogOut, MessageSquare, Settings, User, ChevronRight, Shield, Gift, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/MainLayout';
-import { Separator } from '@/components/ui/separator';
 import { toast } from "sonner";
 
 const Profile = () => {
@@ -23,22 +22,44 @@ const Profile = () => {
     { 
       icon: MessageSquare, 
       label: 'Pesan', 
-      action: () => navigate('/messages') 
+      action: () => navigate('/messages'),
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-100'
     },
     { 
       icon: Calendar, 
       label: 'Riwayat Listing', 
-      action: () => navigate('/listing-history')
+      action: () => navigate('/listing-history'),
+      color: 'text-orange-500',
+      bgColor: 'bg-orange-100'
     },
     { 
       icon: CreditCard, 
       label: 'Token & Pembayaran', 
-      action: () => navigate('/tokens') 
+      action: () => navigate('/tokens'),
+      color: 'text-green-500',
+      bgColor: 'bg-green-100'
     },
     { 
       icon: Settings, 
       label: 'Pengaturan', 
-      action: () => navigate('/settings')
+      action: () => navigate('/settings'),
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-100'
+    },
+    { 
+      icon: Shield, 
+      label: 'Keamanan', 
+      action: () => console.log('Security pressed'),
+      color: 'text-cyan-500',
+      bgColor: 'bg-cyan-100'
+    },
+    { 
+      icon: Gift, 
+      label: 'Kode Promo', 
+      action: () => console.log('Promo code pressed'),
+      color: 'text-pink-500',
+      bgColor: 'bg-pink-100'
     },
   ];
 
@@ -49,71 +70,97 @@ const Profile = () => {
   
   return (
     <MainLayout>
-      {/* Header */}
-      <div className="bg-logiflex-blue text-white p-4 pt-safe">
-        <h1 className="text-xl font-bold">Profil</h1>
+      {/* Modern Gradient Header */}
+      <div className="bg-gradient-primary text-white p-6 pt-safe rounded-b-3xl shadow-lg">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl font-bold">Profil</h1>
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-white hover:bg-white/20 rounded-full"
+            onClick={() => navigate('/settings')}
+          >
+            <Settings size={20} />
+          </Button>
+        </div>
       </div>
       
-      <div className="p-4">
+      <div className="p-4 -mt-10">
         {/* Profile Card */}
-        <div className="bg-white rounded-lg shadow p-4 mb-6">
+        <div className="bg-white rounded-2xl shadow-card p-5">
           <div className="flex items-center">
-            <div className="bg-logiflex-blue/20 rounded-full p-3">
-              <User size={32} className="text-logiflex-blue" />
+            <div className="bg-logiflex-blue/10 rounded-full p-4">
+              <User size={40} className="text-logiflex-blue" />
             </div>
             <div className="ml-4">
-              <h2 className="font-semibold text-lg">{user.name}</h2>
-              <p className="text-sm text-gray-500">{user.phone}</p>
+              <h2 className="font-bold text-xl">{user.name}</h2>
+              <div className="flex items-center mt-1">
+                <span className="bg-green-100 text-green-600 text-xs px-2 py-0.5 rounded-full flex items-center">
+                  <Star size={12} className="mr-1" />
+                  Verified
+                </span>
+                <span className="text-sm text-gray-500 ml-2">{user.phone}</span>
+              </div>
             </div>
           </div>
           
-          <Separator className="my-4" />
-          
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mt-6 bg-gray-50 p-4 rounded-lg">
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <p>{user.email}</p>
+              <p className="font-medium">{user.email}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Token Tersedia</p>
-              <p className="font-medium">{user.tokens} Token</p>
+              <p className="text-lg font-bold text-logiflex-blue">{user.tokens} <span className="text-sm font-normal">Token</span></p>
             </div>
             <div className="col-span-2">
               <p className="text-sm text-gray-500">Bergabung Sejak</p>
-              <p>{user.joinDate}</p>
+              <p className="font-medium">{user.joinDate}</p>
             </div>
           </div>
           
           <Button 
-            variant="outline" 
-            className="w-full mt-4"
+            className="w-full mt-5 bg-gradient-primary hover:bg-gradient-primary border-0 rounded-xl shadow-button hover:shadow-lg transition-all py-6 text-base"
             onClick={() => navigate('/tokens')}
           >
+            <CreditCard size={20} className="mr-2" />
             Beli Token
           </Button>
         </div>
         
         {/* Menu */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          {menuItems.map((item, index) => (
-            <button 
-              key={index}
-              className="flex items-center w-full p-4 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors"
-              onClick={item.action}
-            >
-              <item.icon size={20} className="text-logiflex-darkgrey mr-3" />
-              <span>{item.label}</span>
-            </button>
-          ))}
-          
-          <Separator />
+        <div className="mt-6 space-y-3 mb-4">
+          <h3 className="font-semibold text-lg px-1">Menu</h3>
+
+          <div className="bg-white rounded-2xl shadow-card overflow-hidden">
+            {menuItems.map((item, index) => (
+              <button 
+                key={index}
+                className="flex items-center w-full p-4 text-left hover:bg-gray-50 active:bg-gray-100 transition-colors justify-between group"
+                onClick={item.action}
+              >
+                <div className="flex items-center">
+                  <div className={`${item.bgColor} ${item.color} p-2 rounded-lg mr-3`}>
+                    <item.icon size={18} />
+                  </div>
+                  <span className="font-medium">{item.label}</span>
+                </div>
+                <ChevronRight size={18} className="text-gray-400 group-hover:text-gray-600 transition-colors" />
+              </button>
+            ))}
+          </div>
           
           <button 
-            className="flex items-center w-full p-4 text-left text-red-500 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+            className="flex items-center w-full p-4 text-left text-red-500 bg-white rounded-2xl shadow-card hover:bg-gray-50 active:bg-gray-100 transition-colors justify-between group"
             onClick={handleLogout}
           >
-            <LogOut size={20} className="mr-3" />
-            <span>Keluar</span>
+            <div className="flex items-center">
+              <div className="bg-red-100 text-red-500 p-2 rounded-lg mr-3">
+                <LogOut size={18} />
+              </div>
+              <span className="font-medium">Keluar</span>
+            </div>
+            <ChevronRight size={18} className="text-gray-400 group-hover:text-red-500 transition-colors" />
           </button>
         </div>
       </div>
