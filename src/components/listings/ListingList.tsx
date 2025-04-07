@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Package } from 'lucide-react';
 import ListingCard, { ListingType } from './ListingCard';
 
 interface Listing {
