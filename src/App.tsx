@@ -10,6 +10,9 @@ import CreateListing from "./pages/CreateListing";
 import Profile from "./pages/Profile";
 import TokenPurchase from "./pages/TokenPurchase";
 import Search from "./pages/Search";
+import Messages from "./pages/Messages";
+import ListingHistory from "./pages/ListingHistory";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +28,9 @@ const App = () => (
           <Route path="/profile" element={<Profile />} />
           <Route path="/tokens" element={<TokenPurchase />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/listing-history" element={<ListingHistory />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

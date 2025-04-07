@@ -5,6 +5,7 @@ import { Calendar, CreditCard, LogOut, MessageSquare, Settings, User } from 'luc
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/MainLayout';
 import { Separator } from '@/components/ui/separator';
+import { toast } from "sonner";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -22,12 +23,12 @@ const Profile = () => {
     { 
       icon: MessageSquare, 
       label: 'Pesan', 
-      action: () => console.log('Messages') 
+      action: () => navigate('/messages') 
     },
     { 
       icon: Calendar, 
       label: 'Riwayat Listing', 
-      action: () => console.log('Listing History') 
+      action: () => navigate('/listing-history')
     },
     { 
       icon: CreditCard, 
@@ -37,9 +38,14 @@ const Profile = () => {
     { 
       icon: Settings, 
       label: 'Pengaturan', 
-      action: () => console.log('Settings') 
+      action: () => navigate('/settings')
     },
   ];
+
+  const handleLogout = () => {
+    toast.success("Berhasil keluar dari akun");
+    navigate('/');
+  };
   
   return (
     <MainLayout>
@@ -104,7 +110,7 @@ const Profile = () => {
           
           <button 
             className="flex items-center w-full p-4 text-left text-red-500 hover:bg-gray-50 active:bg-gray-100 transition-colors"
-            onClick={() => console.log('Logout')}
+            onClick={handleLogout}
           >
             <LogOut size={20} className="mr-3" />
             <span>Keluar</span>
