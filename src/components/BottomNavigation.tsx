@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Search, Plus, User, MessageCircle } from 'lucide-react';
+import { Home, Plus, User, MessageCircle, Coins } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BottomNavigation = () => {
@@ -11,7 +11,7 @@ const BottomNavigation = () => {
 
   const navItems = [
     { path: '/', label: 'Beranda', icon: Home },
-    { path: '/search', label: 'Pencarian', icon: Search },
+    { path: '/tokens', label: 'Token', icon: Coins },
     { path: '/create', label: 'Listing', icon: Plus },
     { 
       path: '/messages', 
