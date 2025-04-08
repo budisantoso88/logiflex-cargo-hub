@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
 import MainLayout from '@/layouts/MainLayout';
-import { Search as SearchIcon } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import ListingList from '@/components/listings/ListingList';
+import { useNavigate } from 'react-router-dom';
+import ListingList, { Listing } from '@/components/listings/ListingList';
 import { Separator } from '@/components/ui/separator';
+import AdvancedSearch, { FilterOptions } from '@/components/search/AdvancedSearch';
 
 // Mock data for demonstration purposes
 const mockListings = [
@@ -31,26 +31,24 @@ const mockListings = [
 ];
 
 const SearchPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
   const [listings, setListings] = useState(mockListings);
+  const [filters, setFilters] = useState<FilterOptions>({
+    search: '',
+    priceRange: '',
+    origin: '',
+    destination: '',
+    sortBy: '',
+    listingType: 'semua',
+  });
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
-    setSearchQuery(query);
-    
-    if (query.trim() === '') {
-      setListings(mockListings);
-      return;
-    }
-    
-    const filtered = mockListings.filter(
-      listing => 
-        listing.title.toLowerCase().includes(query) ||
-        listing.origin.toLowerCase().includes(query) ||
-        listing.destination.toLowerCase().includes(query)
-    );
-    
+  const handleSearch = (filtered: Listing[], newFilters: FilterOptions) => {
     setListings(filtered);
+    setFilters(newFilters);
+  };
+
+  const handleListingClick = (id: string) => {
+    navigate(`/listing/${id}`);
   };
 
   return (
@@ -58,15 +56,11 @@ const SearchPage = () => {
       <div className="p-4">
         <h1 className="text-xl font-bold mb-4">Pencarian</h1>
         
-        <div className="relative mb-4">
-          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-          <Input
-            className="pl-10"
-            placeholder="Cari rute, armada, atau jenis pengiriman..."
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-        </div>
+        <AdvancedSearch 
+          listings={mockListings}
+          onSearch={handleSearch}
+          className="mb-4"
+        />
         
         <Separator className="my-4" />
         
@@ -74,7 +68,7 @@ const SearchPage = () => {
           <h2 className="text-lg font-semibold mb-2">Hasil Pencarian</h2>
           <ListingList 
             listings={listings} 
-            onListingClick={(id) => console.log(`Listing ${id} clicked`)} 
+            onListingClick={handleListingClick} 
           />
         </div>
       </div>

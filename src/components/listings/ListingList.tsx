@@ -4,7 +4,7 @@ import { Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ListingCard, { ListingType } from './ListingCard';
 
-interface Listing {
+export interface Listing {
   id: string;
   type: ListingType;
   title: string;
@@ -15,7 +15,7 @@ interface Listing {
   expiresIn: number; // hours remaining
 }
 
-interface ListingListProps {
+export interface ListingListProps {
   listings: Listing[];
   onListingClick?: (id: string) => void;
 }

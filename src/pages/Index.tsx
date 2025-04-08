@@ -5,12 +5,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Package, Truck, TrendingUp, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/MainLayout';
-import ListingList from '@/components/listings/ListingList';
+import ListingList, { Listing } from '@/components/listings/ListingList';
 import { ListingType } from '@/components/listings/ListingCard';
+import AdvancedSearch, { FilterOptions } from '@/components/search/AdvancedSearch';
 
 const Index = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<string>("semua");
+  const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
+  const [appliedFilters, setAppliedFilters] = useState<FilterOptions>({
+    search: '',
+    priceRange: '',
+    origin: '',
+    destination: '',
+    sortBy: '',
+    listingType: 'semua',
+  });
   
   // Mock data - in a real app this would come from an API
   const mockListings = [
@@ -54,17 +64,118 @@ const Index = () => {
       price: 500000,
       expiresIn: 3,
     },
+    {
+      id: '5',
+      type: 'cari-armada' as ListingType,
+      title: 'Pengiriman Bahan Makanan Fresh',
+      origin: 'Jakarta Barat',
+      destination: 'Depok',
+      date: '27 Apr 2025',
+      price: 600000,
+      expiresIn: 18,
+    },
+    {
+      id: '6',
+      type: 'sedia-armada' as ListingType,
+      title: 'Truk Box Berpendingin Tersedia',
+      origin: 'Bandung, Jawa Barat',
+      destination: 'Cirebon',
+      date: '28 Apr 2025',
+      price: 1800000,
+      expiresIn: 24,
+    },
   ];
-  
-  const filteredListings = activeTab === 'semua' 
-    ? mockListings 
-    : mockListings.filter(listing => listing.type === activeTab);
+
+  // Initialize filtered listings with data filtered by tab
+  React.useEffect(() => {
+    const initialFiltered = activeTab === 'semua' 
+      ? mockListings 
+      : mockListings.filter(listing => listing.type === activeTab);
+    setFilteredListings(initialFiltered);
+  }, [activeTab]);
   
   const handleListingClick = (id: string) => {
     navigate(`/listing/${id}`);
   };
   
   const userTokens = 2; // Mock user token count
+  
+  const handleSearch = (filtered: Listing[], filters: FilterOptions) => {
+    setFilteredListings(filtered);
+    setAppliedFilters(filters);
+    
+    // If filter includes a listing type, also update the tab
+    if (filters.listingType !== 'semua') {
+      setActiveTab(filters.listingType);
+    }
+  };
+  
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    
+    // Also update the filter for listing type
+    const newFilters = {
+      ...appliedFilters,
+      listingType: value as ListingType | 'semua'
+    };
+    
+    // Apply the filters
+    const tabFiltered = value === 'semua' 
+      ? mockListings 
+      : mockListings.filter(listing => listing.type === value);
+    
+    // Apply other existing filters to the tab-filtered results
+    let filtered = [...tabFiltered];
+    if (appliedFilters.search) {
+      const searchLower = appliedFilters.search.toLowerCase();
+      filtered = filtered.filter(listing => 
+        listing.title.toLowerCase().includes(searchLower) ||
+        listing.origin.toLowerCase().includes(searchLower) ||
+        listing.destination.toLowerCase().includes(searchLower)
+      );
+    }
+    
+    if (appliedFilters.origin) {
+      filtered = filtered.filter(listing => 
+        listing.origin.toLowerCase().includes(appliedFilters.origin.toLowerCase())
+      );
+    }
+    
+    if (appliedFilters.destination) {
+      filtered = filtered.filter(listing => 
+        listing.destination.toLowerCase().includes(appliedFilters.destination.toLowerCase())
+      );
+    }
+    
+    if (appliedFilters.priceRange) {
+      const [min, max] = appliedFilters.priceRange.split('-').map(Number);
+      if (!isNaN(min) && !isNaN(max)) {
+        filtered = filtered.filter(listing => 
+          listing.price >= min && listing.price <= max
+        );
+      }
+    }
+    
+    if (appliedFilters.sortBy) {
+      filtered.sort((a, b) => {
+        switch (appliedFilters.sortBy) {
+          case 'price-asc':
+            return a.price - b.price;
+          case 'price-desc':
+            return b.price - a.price;
+          case 'date-asc':
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          case 'date-desc':
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          default:
+            return 0;
+        }
+      });
+    }
+    
+    setFilteredListings(filtered);
+    setAppliedFilters(newFilters);
+  };
   
   return (
     <MainLayout>
@@ -132,9 +243,16 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Listings */}
+      {/* Listings with Advanced Search */}
       <div className="px-4 pb-6">
-        <Tabs defaultValue="semua" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {/* Advanced Search Component */}
+        <AdvancedSearch 
+          listings={mockListings} 
+          onSearch={handleSearch}
+          className="mb-4"
+        />
+        
+        <Tabs defaultValue="semua" value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="grid grid-cols-3 mb-4 bg-gray-100 p-1 rounded-xl">
             <TabsTrigger value="semua" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow">Semua</TabsTrigger>
             <TabsTrigger value="cari-armada" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow">Cari Armada</TabsTrigger>
