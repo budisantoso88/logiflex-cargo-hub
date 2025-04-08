@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, Bell, Lock, HelpCircle, User, Book, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/MainLayout';
@@ -7,9 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { toast } from "sonner";
+import ProfileEdit from '@/components/profile/ProfileEdit';
 
 const Settings = () => {
   const navigate = useNavigate();
+  const [isProfileEditOpen, setIsProfileEditOpen] = useState(false);
 
   const handleLogout = () => {
     // In a real app, this would handle logout logic
@@ -38,7 +40,10 @@ const Settings = () => {
           <h2 className="p-4 font-semibold text-gray-700">Akun</h2>
           <Separator />
           
-          <div className="p-4 flex items-center justify-between">
+          <div 
+            className="p-4 flex items-center justify-between cursor-pointer active:bg-gray-50"
+            onClick={() => setIsProfileEditOpen(true)}
+          >
             <div className="flex items-center">
               <User size={20} className="text-logiflex-darkgrey mr-3" />
               <span>Ubah Profil</span>
@@ -58,6 +63,12 @@ const Settings = () => {
             </Button>
           </div>
         </div>
+        
+        {/* Profile Edit Dialog */}
+        <ProfileEdit 
+          open={isProfileEditOpen} 
+          onOpenChange={setIsProfileEditOpen} 
+        />
         
         <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
           <h2 className="p-4 font-semibold text-gray-700">Notifikasi</h2>
