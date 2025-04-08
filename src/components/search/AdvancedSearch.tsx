@@ -246,7 +246,7 @@ export const AdvancedSearch = ({ onSearch, listings, className }: AdvancedSearch
                   <SelectValue placeholder="Pilih Rentang" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua Harga</SelectItem>
+                  <SelectItem value="all-prices">Semua Harga</SelectItem>
                   <SelectItem value="0-500000">Rp 0 - Rp 500.000</SelectItem>
                   <SelectItem value="500000-1000000">Rp 500.000 - Rp 1.000.000</SelectItem>
                   <SelectItem value="1000000-2000000">Rp 1.000.000 - Rp 2.000.000</SelectItem>
@@ -265,7 +265,7 @@ export const AdvancedSearch = ({ onSearch, listings, className }: AdvancedSearch
                   <SelectValue placeholder="Pilih Kota Asal" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua Asal</SelectItem>
+                  <SelectItem value="all-origins">Semua Asal</SelectItem>
                   {origins.map(origin => (
                     <SelectItem key={origin} value={extractMainLocation(origin)}>
                       {extractMainLocation(origin)}
@@ -285,7 +285,7 @@ export const AdvancedSearch = ({ onSearch, listings, className }: AdvancedSearch
                   <SelectValue placeholder="Pilih Kota Tujuan" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Semua Tujuan</SelectItem>
+                  <SelectItem value="all-destinations">Semua Tujuan</SelectItem>
                   {destinations.map(destination => (
                     <SelectItem key={destination} value={extractMainLocation(destination)}>
                       {extractMainLocation(destination)}
