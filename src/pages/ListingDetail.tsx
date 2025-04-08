@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
@@ -14,7 +13,6 @@ import { useToast } from '@/hooks/use-toast';
 import MainLayout from '@/layouts/MainLayout';
 import { ListingType } from '@/components/listings/ListingCard';
 
-// Mock data - in a real app this would come from an API
 const mockListings = [
   {
     id: '1',
@@ -65,7 +63,6 @@ const ListingDetail = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  // Find the listing with the matching ID
   const listing = mockListings.find(item => item.id === id);
   
   if (!listing) {
@@ -109,7 +106,6 @@ const ListingDetail = () => {
   
   return (
     <MainLayout>
-      {/* Header with gradient background */}
       <div className="bg-gradient-primary text-white p-4 pt-safe">
         <div className="flex items-center">
           <Button 
@@ -125,7 +121,6 @@ const ListingDetail = () => {
       </div>
       
       <div className="p-4 animate-fade-in">
-        {/* Listing Header */}
         <div className="mb-4">
           <div className="flex justify-between items-start mb-2">
             <h2 className="text-2xl font-bold">{listing.title}</h2>
@@ -147,7 +142,6 @@ const ListingDetail = () => {
           </div>
         </div>
         
-        {/* Route and Date Info */}
         <Card className="mb-4 shadow-md">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 mb-3">
@@ -175,7 +169,6 @@ const ListingDetail = () => {
           </CardContent>
         </Card>
         
-        {/* Description */}
         <Card className="mb-4 shadow-md">
           <CardContent className="p-4">
             <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
@@ -186,7 +179,6 @@ const ListingDetail = () => {
           </CardContent>
         </Card>
         
-        {/* Specifications */}
         <Card className="mb-4 shadow-md">
           <CardContent className="p-4">
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -216,7 +208,6 @@ const ListingDetail = () => {
           </CardContent>
         </Card>
         
-        {/* Owner Info */}
         <Card className="mb-6 shadow-md">
           <CardContent className="p-4">
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -234,16 +225,41 @@ const ListingDetail = () => {
               </div>
             </div>
             
-            <div className="flex items-center text-amber-500 mt-1">
+            <div className="flex items-center text-amber-500 mt-1 mb-3">
               {'★'.repeat(Math.floor(listing.ownerRating))}
               {listing.ownerRating % 1 > 0 ? '⭐' : ''}
               {'☆'.repeat(5 - Math.ceil(listing.ownerRating))}
               <span className="ml-1 text-gray-700">{listing.ownerRating.toFixed(1)}</span>
             </div>
+            
+            <Separator className="my-3" />
+            
+            <div className="mt-3 space-y-3">
+              <div className="flex items-center gap-2">
+                <Phone size={18} className="text-logiflex-blue" />
+                <span className="font-medium">{listing.contactPhone}</span>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2 mt-3">
+                <Button 
+                  variant="outline"
+                  className="flex items-center gap-2" 
+                  onClick={handleContact}
+                >
+                  <Phone size={18} /> Telepon
+                </Button>
+                
+                <Button 
+                  className="bg-gradient-primary border-0 flex items-center gap-2" 
+                  onClick={handleChat}
+                >
+                  <MessageSquare size={18} /> Chat
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
         
-        {/* Action Buttons */}
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 pb-safe flex gap-3 shadow-lg">
           <Button 
             variant="outline"
